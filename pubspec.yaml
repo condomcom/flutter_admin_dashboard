@@ -34,9 +34,16 @@ dependencies:
   provider: ^6.0.0
   data_table_2: ^2.0.3
   dio: ^4.0.0
-  flutter_bloc: ^7.3.0
+
   pretty_dio_logger: ^1.1.1
   json_annotation: ^4.1.0
+
+  redux: ^5.0.0
+  flutter_redux: ^0.8.2
+  rxdart: ^0.27.1
+
+  flutter_bloc: ^7.3.0
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
