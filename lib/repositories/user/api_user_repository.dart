@@ -9,7 +9,7 @@ class ApiUserRepository implements AbstractApiUserRepository {
 
   Dio get _dio => _clientFactory.dio;
 
-  static const _route = '/user';
+  static const _route = '/users';
 
   @override
   Future<User> get(String id) async {
