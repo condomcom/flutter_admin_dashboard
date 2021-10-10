@@ -7,12 +7,12 @@ class User {
   const User({
     required this.id,
     required this.name,
-    required this.surname,
-    required this.patronymic,
+    this.surname,
+    this.patronymic,
     this.email,
-    required this.phone,
-    this.createdAt,
-    this.updatedAt,
+    this.phone,
+    required this.createdAt,
+    required this.updatedAt,
     this.birthDate,
   });
 
@@ -21,12 +21,12 @@ class User {
   @JsonKey(name: 'strId')
   final String id;
   final String name;
-  final String surname;
-  final String patronymic;
+  final String? surname;
+  final String? patronymic;
   final String? email;
-  final String phone;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final String? phone;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final DateTime? birthDate;
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
