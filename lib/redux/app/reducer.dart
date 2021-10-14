@@ -3,7 +3,7 @@ import 'package:admin/redux/app/users/actions.dart';
 import 'package:admin/redux/app/users/users.dart';
 import 'package:redux/redux.dart';
 
-final usersReducer = combineReducers<AppState>([
+final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, UsersLoadingFailureAction>(_onLoadingFailure),
   TypedReducer<AppState, UsersLoadedAction>(_onLoaded),
 ]);

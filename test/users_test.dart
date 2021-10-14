@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 main() {
   final _cF = ClientFactory(
-    baseUrl: 'http://localhost:5000',
+    baseUrl: 'https://condomcom-server.herokuapp.com',
     apiKey: '',
     apiPath: '/api',
   );

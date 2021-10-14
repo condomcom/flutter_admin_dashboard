@@ -42,6 +42,8 @@ dependencies:
   flutter_redux: ^0.8.2
   rxdart: ^0.27.1
 
+  get_it: ^7.2.0
+
   flutter_bloc: ^7.3.0
   equatable: ^2.0.3
 
