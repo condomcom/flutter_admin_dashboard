@@ -19,7 +19,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
-    Get.get<Store<AppState>>().dispatch(LoadUsersAction());
+    Get.get<Store<AppState>>().dispatch(LoadAll());
     super.initState();
   }
 

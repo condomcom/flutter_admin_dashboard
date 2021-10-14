@@ -6,9 +6,11 @@ part 'conference.g.dart';
 class Conference {
   const Conference({
     required this.id,
-    required this.shortName,
-    required this.fullName,
-    required this.description,
+    this.shortName,
+    this.fullName,
+    this.description,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Conference.fromJson(Map<String, dynamic> json) =>
@@ -16,9 +18,11 @@ class Conference {
 
   @JsonKey(name: 'strId')
   final String id;
-  final String shortName;
-  final String fullName;
-  final String description;
+  final String? shortName;
+  final String? fullName;
+  final String? description;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   Map<String, dynamic> toJson() => _$ConferenceToJson(this);
 }

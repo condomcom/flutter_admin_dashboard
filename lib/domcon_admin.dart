@@ -1,5 +1,6 @@
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/redux/redux.dart';
+import 'package:admin/repositories/conference/repository.dart';
 import 'package:admin/repositories/user/repository.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/utils/constants.dart';
@@ -26,11 +27,16 @@ class _DomComAdminState extends State<DomComAdmin> {
   late final AbstractApiUserRepository _apiUserRepository =
       ApiUserRepository(_clientFactory);
 
+  late final AbstractApiConferenceRepository _apiConferenceRepository =
+      ApiConferenceRepository(_clientFactory);
+
   late final Store<AppState> _appStore = Store<AppState>(
     appReducer,
     initialState: AppState(),
     middleware: [
+      AppMiddleware(),
       UserMiddleware(_apiUserRepository),
+      ConferenceMiddleware(_apiConferenceRepository),
     ],
   );
 
