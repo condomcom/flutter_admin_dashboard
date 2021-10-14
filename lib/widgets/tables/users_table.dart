@@ -1,5 +1,6 @@
 import 'package:admin/models/user/user.dart';
 import 'package:admin/utils/constants.dart';
+import 'package:admin/utils/responsive.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +24,21 @@ class UsersTable extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "Пользователи",
                 style: Theme.of(context).textTheme.subtitle1,
+              ),
+              ElevatedButton.icon(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: defaultPadding * 1,
+                  ),
+                ),
+                onPressed: () {},
+                icon: Icon(Icons.add),
+                label: Text("Добавить"),
               ),
             ],
           ),
