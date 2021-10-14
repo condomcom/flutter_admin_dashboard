@@ -39,8 +39,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   flex: 5,
                   child: Column(
                     children: [
-                      MyFiles(),
-                      SizedBox(height: defaultPadding),
+                      // MyFiles(),
+                      // SizedBox(height: defaultPadding),
                       // RecentFiles(),
                       UsersTableLoader(),
                       SizedBox(height: defaultPadding),
