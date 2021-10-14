@@ -42,7 +42,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       MyFiles(),
                       SizedBox(height: defaultPadding),
                       // RecentFiles(),
-                      UsersTbleLoader(),
+                      UsersTableLoader(),
+                      SizedBox(height: defaultPadding),
+                      ConferencesTableLoader(),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context)) StarageDetails(),
@@ -66,8 +68,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 }
 
-class UsersTbleLoader extends StatelessWidget {
-  const UsersTbleLoader({Key? key}) : super(key: key);
+class UsersTableLoader extends StatelessWidget {
+  const UsersTableLoader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +78,24 @@ class UsersTbleLoader extends StatelessWidget {
     }, builder: (BuildContext context, AppState state) {
       if (state.usersState is UsersLoaded) {
         return UsersTable(users: (state.usersState! as UsersLoaded).users);
+      }
+      return CircularProgressIndicator();
+    });
+  }
+}
+
+class ConferencesTableLoader extends StatelessWidget {
+  const ConferencesTableLoader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, AppState>(converter: (store) {
+      return store.state;
+    }, builder: (BuildContext context, AppState state) {
+      if (state.conferencesState is ConferencesLoaded) {
+        return ConferencesTable(
+            conferences:
+                (state.conferencesState! as ConferencesLoaded).conferences);
       }
       return CircularProgressIndicator();
     });

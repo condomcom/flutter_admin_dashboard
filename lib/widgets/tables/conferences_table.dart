@@ -1,15 +1,15 @@
-import 'package:admin/models/user/user.dart';
+import 'package:admin/models/conference/conference.dart';
 import 'package:admin/utils/constants.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-class UsersTable extends StatelessWidget {
-  const UsersTable({
+class ConferencesTable extends StatelessWidget {
+  const ConferencesTable({
     Key? key,
-    required this.users,
+    required this.conferences,
   }) : super(key: key);
 
-  final List<User> users;
+  final List<Conference> conferences;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class UsersTable extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Пользователи",
+                "Конференции",
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               ElevatedButton.icon(
@@ -48,18 +48,18 @@ class UsersTable extends StatelessWidget {
               minWidth: 600,
               columns: [
                 DataColumn(
-                  label: Text("Фио"),
+                  label: Text("ID"),
                 ),
                 DataColumn(
-                  label: Text("Email"),
+                  label: Text("Название"),
                 ),
                 DataColumn(
-                  label: Text("Телефон"),
+                  label: Text("Описание"),
                 ),
               ],
               rows: List.generate(
-                users.length,
-                (index) => _buildDataRow(users[index]),
+                conferences.length,
+                (index) => _buildDataRow(conferences[index]),
               ),
             ),
           ),
@@ -68,12 +68,12 @@ class UsersTable extends StatelessWidget {
     );
   }
 
-  DataRow _buildDataRow(User user) {
+  DataRow _buildDataRow(Conference conference) {
     return DataRow(
       cells: [
-        DataCell(Text('${user.name} ${user.patronymic} ${user.surname}')),
-        DataCell(Text(user.email ?? '')),
-        DataCell(Text(user.phone ?? '')),
+        DataCell(Text('${conference.id}')),
+        DataCell(Text(conference.shortName ?? '')),
+        DataCell(Text(conference.description ?? '')),
       ],
     );
   }
