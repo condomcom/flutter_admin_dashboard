@@ -57,12 +57,7 @@ class _DomComAdminState extends State<DomComAdmin> {
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'DomCon Admin page',
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: bgColor,
-          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-              .apply(bodyColor: Colors.white),
-          canvasColor: secondaryColor,
-        ),
+        theme: _getTheme(),
         routerDelegate: AutoRouterDelegate(
           widget._appRouter,
           navigatorObservers: () => [
@@ -83,4 +78,14 @@ class _DomComAdminState extends State<DomComAdmin> {
       ),
     );
   }
+
+  ThemeData _getTheme() => ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: bgColor,
+        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+            .apply(bodyColor: Colors.white),
+        canvasColor: secondaryColor,
+        appBarTheme: AppBarTheme(
+          backgroundColor: bgColor,
+        ),
+      );
 }
