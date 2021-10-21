@@ -1,3 +1,4 @@
+import 'package:admin/screens/conference/conference.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/screens/user/user.dart';
 import 'package:auto_route/auto_route.dart';
@@ -11,6 +12,7 @@ import 'package:auto_route/auto_route.dart';
   routes: <AutoRoute>[
     AutoRoute(page: MainScreen, initial: true),
     AutoRoute(page: UserEditScreen),
+    AutoRoute(page: ConferenceEditScreen),
   ],
 )
 class $AppRouter {}
