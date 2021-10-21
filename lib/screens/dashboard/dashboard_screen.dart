@@ -1,13 +1,29 @@
+import 'package:admin/redux/redux.dart';
+import 'package:admin/screens/dashboard/components/components.dart';
 import 'package:admin/screens/dashboard/components/my_fields.dart';
 import 'package:admin/utils/constants.dart';
+import 'package:admin/utils/di/di.dart';
 import 'package:admin/utils/responsive.dart';
+import 'package:admin/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'components/header.dart';
 
-import 'components/recent_files.dart';
 import 'components/storage_details.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    Get.get<Store<AppState>>().dispatch(LoadAll());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,9 +40,15 @@ class DashboardScreen extends StatelessWidget {
                   flex: 5,
                   child: Column(
                     children: [
-                      MyFiles(),
+                      // MyFiles(),
+                      // SizedBox(height: defaultPadding),
+                      // RecentFiles(),
+                      UsersTableLoader(),
                       SizedBox(height: defaultPadding),
-                      RecentFiles(),
+                      ConferencesTableLoader(),
+                      SizedBox(height: defaultPadding),
+                      ConferencesTableLoader(),
+                      SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context)) StarageDetails(),

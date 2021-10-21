@@ -8,9 +8,11 @@ part of 'conference.dart';
 
 Conference _$ConferenceFromJson(Map<String, dynamic> json) => Conference(
       id: json['strId'] as String,
-      shortName: json['shortName'] as String,
-      fullName: json['fullName'] as String,
-      description: json['description'] as String,
+      shortName: json['shortName'] as String?,
+      fullName: json['fullName'] as String?,
+      description: json['description'] as String?,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$ConferenceToJson(Conference instance) =>
@@ -19,4 +21,6 @@ Map<String, dynamic> _$ConferenceToJson(Conference instance) =>
       'shortName': instance.shortName,
       'fullName': instance.fullName,
       'description': instance.description,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt.toIso8601String(),
     };
