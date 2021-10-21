@@ -20,7 +20,7 @@ class User {
 
   @JsonKey(name: 'strId')
   final String id;
-  final String name;
+  final String? name;
   final String? surname;
   final String? patronymic;
   final String? email;
