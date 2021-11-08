@@ -97,7 +97,9 @@ class _UserEditScreenState extends State<UserEditScreen> {
               Get.get<Store<AppState>>().dispatch(
                 CreateUserAction(
                   user,
-                  onSuccesed: () {},
+                  onSuccesed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               );
             },
