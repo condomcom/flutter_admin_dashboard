@@ -4,9 +4,9 @@ import 'package:admin/redux/app/actions.dart';
 class LoadUsersAction extends UserAction {}
 
 class CreateUserAction extends UserAction {
-  CreateUserAction(this.user, {required this.onSucces});
+  CreateUserAction(this.user, {required this.onSuccesed});
   final User user;
-  final Function() onSucces;
+  final Function() onSuccesed;
 }
 
 class UsersLoadedAction extends UserAction {

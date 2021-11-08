@@ -97,7 +97,7 @@ class _UserEditScreenState extends State<UserEditScreen> {
               Get.get<Store<AppState>>().dispatch(
                 CreateUserAction(
                   user,
-                  onSucces: () {},
+                  onSuccesed: () {},
                 ),
               );
             },

@@ -45,6 +45,7 @@ class UserMiddleware implements MiddlewareClass<AppState> {
           ),
         );
       }
+      action.onSuccesed();
     } on Exception catch (e) {
       log('Create user exception\n$e');
     }
