@@ -6,16 +6,18 @@ class BottomButton extends StatelessWidget {
   const BottomButton({
     Key? key,
     required this.title,
+    required this.onTap,
   }) : super(key: key);
 
   final String title;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: SizedBox(
@@ -29,7 +31,7 @@ class BottomButton extends StatelessWidget {
                       defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
                 ),
               ),
-              onPressed: () {},
+              onPressed: onTap,
               child: Text(title),
             ),
           ),

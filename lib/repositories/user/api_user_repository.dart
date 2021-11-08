@@ -25,7 +25,8 @@ class ApiUserRepository implements AbstractApiUserRepository {
 
   @override
   Future<void> create(User user) async {
-    await _dio.post('$_route', data: user.toJson());
+    final data = user.toJson();
+    await _dio.post('$_route', data: data);
   }
 
   @override

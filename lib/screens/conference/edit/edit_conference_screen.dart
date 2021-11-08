@@ -45,6 +45,7 @@ class ConferenceEditScreen extends StatelessWidget {
           ),
           BottomButton(
             title: 'Сохранить',
+            onTap: () {},
           ),
         ],
       ),

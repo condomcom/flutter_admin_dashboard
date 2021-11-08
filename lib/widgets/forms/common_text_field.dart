@@ -6,14 +6,17 @@ class CommonTextField extends StatelessWidget {
     Key? key,
     this.hintText,
     this.suffixIcon,
+    this.controller,
   }) : super(key: key);
 
   final String? hintText;
   final Widget? suffixIcon;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
         fillColor: secondaryColor,

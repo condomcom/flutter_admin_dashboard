@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:admin/redux/app/actions.dart';
 import 'package:admin/redux/app/app.dart';
@@ -25,6 +26,27 @@ class UserMiddleware implements MiddlewareClass<AppState> {
   ) async {
     if (action is LoadUsersAction) {
       _loadUsers(store);
+    } else if (action is CreateUserAction) {
+      _createUser(action, store);
+    }
+  }
+
+  Future<void> _createUser(
+    CreateUserAction action,
+    Store<AppState> store,
+  ) async {
+    try {
+      await usersRepository.create(action.user);
+      if (store.state.usersState is UsersLoadedAction) {
+        store.dispatch(
+          UsersLoadedAction(
+            (store.state.usersState as UsersLoadedAction).users
+              ..add(action.user),
+          ),
+        );
+      }
+    } on Exception catch (e) {
+      log('Create user exception\n$e');
     }
   }
 

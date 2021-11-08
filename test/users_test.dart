@@ -22,7 +22,7 @@ main() {
     'Get user test',
     () async {
       final users = await usersRepo.getAll();
-      final user = await usersRepo.get(users.first.id);
+      final user = await usersRepo.get(users.first.id ?? '');
       expect(user, isNotNull);
     },
   );
@@ -49,7 +49,7 @@ main() {
     'Delete user test',
     () async {
       final users = await usersRepo.getAll();
-      await usersRepo.delete(users.first.id);
+      await usersRepo.delete(users.first.id ?? '');
       expect([], isEmpty);
     },
   );
