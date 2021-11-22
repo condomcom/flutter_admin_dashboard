@@ -93,6 +93,9 @@ class _UserEditScreenState extends State<UserEditScreen> {
                 patronymic: _middleNameController.text,
                 email: _emailController.text,
                 phone: _phoneController.text,
+                createdAt: DateTime.now(),
+                updatedAt: DateTime.now(),
+                birthDate: DateTime.now(),
               );
               Get.get<Store<AppState>>().dispatch(
                 CreateUserAction(
