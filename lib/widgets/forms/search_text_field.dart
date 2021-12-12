@@ -11,7 +11,7 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonTextField(
-      hintText: "Search",
+      hintText: "Поиск",
       suffixIcon: InkWell(
         onTap: () {},
         child: Container(
