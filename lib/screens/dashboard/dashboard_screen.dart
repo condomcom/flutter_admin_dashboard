@@ -1,5 +1,6 @@
 import 'package:admin/controllers/menu_provider.dart';
 import 'package:admin/redux/redux.dart';
+import 'package:admin/screens/activity/activity.dart';
 import 'package:admin/screens/conference/conference.dart';
 import 'package:admin/screens/dashboard/components/components.dart';
 import 'package:admin/screens/home/home.dart';
@@ -50,7 +51,11 @@ class _DashboardBody extends StatelessWidget {
     switch (menuProvider.selectedPageIndex) {
       case 1:
         return EditConferencePage(
-          onComplete: () {},
+          onCompleted: () => menuProvider.selectedPageIndex = 0,
+        );
+      case 3:
+        return ActivityEditPage(
+          onCompleted: () => menuProvider.selectedPageIndex = 0,
         );
       case 0:
       default:

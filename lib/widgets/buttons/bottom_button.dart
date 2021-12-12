@@ -7,17 +7,20 @@ class BottomButton extends StatelessWidget {
     Key? key,
     required this.title,
     required this.onTap,
+    this.padding,
   }) : super(key: key);
 
   final String title;
   final Function() onTap;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding:
+            padding ?? const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: SizedBox(

@@ -26,7 +26,7 @@ class ConferenceEditScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: EditConferencePage(
-          onComplete: () {
+          onCompleted: () {
             Navigator.pop(context);
           },
         ),
@@ -38,10 +38,10 @@ class ConferenceEditScreen extends StatelessWidget {
 class EditConferencePage extends StatelessWidget {
   EditConferencePage({
     Key? key,
-    required this.onComplete,
+    required this.onCompleted,
   }) : super(key: key);
 
-  final Function() onComplete;
+  final Function() onCompleted;
 
   final _shortNameController = TextEditingController();
   final _nameController = TextEditingController();
@@ -77,6 +77,7 @@ class EditConferencePage extends StatelessWidget {
             ResponsiveCenteredView(
               child: BottomButton(
                 title: 'Сохранить',
+                padding: EdgeInsets.zero,
                 onTap: () {
                   final conference = Conference(
                     shortName: _shortNameController.text,
@@ -86,7 +87,7 @@ class EditConferencePage extends StatelessWidget {
                   Get.get<Store<AppState>>().dispatch(
                     CreateConferenceAction(
                       conference,
-                      onSuccesed: onComplete,
+                      onSuccesed: onCompleted,
                     ),
                   );
                 },
