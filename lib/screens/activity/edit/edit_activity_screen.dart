@@ -3,6 +3,7 @@ import 'package:admin/models/conference/conference.dart';
 import 'package:admin/redux/app/activities/activities.dart';
 import 'package:admin/redux/redux.dart';
 import 'package:admin/utils/di/di.dart';
+import 'package:admin/utils/formaters/formaters.dart';
 import 'package:admin/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
@@ -75,7 +76,9 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
                               onPressed: () => _selectDate(_startDate,
                                   onSelect: (d) =>
                                       setState(() => _startDate = d)),
-                              child: Text('$_startDate'),
+                              child: Text(
+                                DateTimeFormater.dateAndTime(_startDate),
+                              ),
                             ),
                           ],
                         ),
@@ -91,7 +94,9 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
                               onPressed: () => _selectDate(_finalDate,
                                   onSelect: (d) =>
                                       setState(() => _finalDate = d)),
-                              child: Text('$_finalDate'),
+                              child: Text(
+                                DateTimeFormater.dateAndTime(_finalDate),
+                              ),
                             ),
                           ],
                         ),
@@ -112,6 +117,7 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
                   shortName: _shortNameController.text,
                   fullName: _nameController.text,
                   description: _descriptionController.text,
+                  participantsLimit: 10,
                 );
                 Get.get<Store<AppState>>().dispatch(CreateActivityAction(
                   activity,
