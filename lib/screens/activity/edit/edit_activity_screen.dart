@@ -40,83 +40,87 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  CommonTextField(
-                    hintText: 'Краткое название',
-                    controller: _shortNameController,
-                  ),
-                  const SizedBox(height: 10),
-                  CommonTextField(
-                    hintText: 'Название',
-                    controller: _nameController,
-                  ),
-                  const SizedBox(height: 10),
-                  CommonTextField(
-                    hintText: 'Описание',
-                    controller: _descriptionController,
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.all(8.0).copyWith(bottom: 0.0),
-                            child: Text('Начало'),
-                          ),
-                          TextButton(
-                            onPressed: () => _selectDate(_startDate,
-                                onSelect: (d) =>
-                                    setState(() => _startDate = d)),
-                            child: Text('$_startDate'),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.all(8.0).copyWith(bottom: 0.0),
-                            child: Text('Конец'),
-                          ),
-                          TextButton(
-                            onPressed: () => _selectDate(_finalDate,
-                                onSelect: (d) =>
-                                    setState(() => _finalDate = d)),
-                            child: Text('$_finalDate'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+            child: ResponsiveCenteredView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    CommonTextField(
+                      hintText: 'Краткое название',
+                      controller: _shortNameController,
+                    ),
+                    const SizedBox(height: 10),
+                    CommonTextField(
+                      hintText: 'Название',
+                      controller: _nameController,
+                    ),
+                    const SizedBox(height: 10),
+                    CommonTextField(
+                      hintText: 'Описание',
+                      controller: _descriptionController,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0)
+                                  .copyWith(bottom: 0.0),
+                              child: Text('Начало'),
+                            ),
+                            TextButton(
+                              onPressed: () => _selectDate(_startDate,
+                                  onSelect: (d) =>
+                                      setState(() => _startDate = d)),
+                              child: Text('$_startDate'),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0)
+                                  .copyWith(bottom: 0.0),
+                              child: Text('Конец'),
+                            ),
+                            TextButton(
+                              onPressed: () => _selectDate(_finalDate,
+                                  onSelect: (d) =>
+                                      setState(() => _finalDate = d)),
+                              child: Text('$_finalDate'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          BottomButton(
-            title: 'Сохранить',
-            onTap: () {
-              final activity = Activity(
-                startsAt: _startDate,
-                finishesAt: _finalDate,
-                shortName: _shortNameController.text,
-                fullName: _nameController.text,
-                description: _descriptionController.text,
-              );
-              Get.get<Store<AppState>>().dispatch(CreateActivityAction(
-                activity,
-                onSuccesed: () {
-                  Navigator.pop(context);
-                },
-              ));
-            },
+          ResponsiveCenteredView(
+            child: BottomButton(
+              title: 'Сохранить',
+              onTap: () {
+                final activity = Activity(
+                  startsAt: _startDate,
+                  finishesAt: _finalDate,
+                  shortName: _shortNameController.text,
+                  fullName: _nameController.text,
+                  description: _descriptionController.text,
+                );
+                Get.get<Store<AppState>>().dispatch(CreateActivityAction(
+                  activity,
+                  onSuccesed: () {
+                    Navigator.pop(context);
+                  },
+                ));
+              },
+            ),
           ),
         ],
       ),
