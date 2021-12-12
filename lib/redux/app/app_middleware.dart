@@ -1,3 +1,4 @@
+import 'package:admin/redux/app/activities/activities.dart';
 import 'package:admin/redux/app/app.dart';
 import 'package:redux/redux.dart';
 
@@ -9,6 +10,7 @@ class AppMiddleware implements MiddlewareClass<AppState> {
     if (action is LoadAll) {
       store.dispatch(LoadUsersAction());
       store.dispatch(LoadConferencesAction());
+      store.dispatch(LoadActivitiesAction());
     }
     next(action);
   }
