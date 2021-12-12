@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:admin/redux/app/actions.dart';
 import 'package:admin/redux/app/activities/actions.dart';
+import 'package:admin/redux/app/activities/activities.dart';
 import 'package:admin/redux/app/app.dart';
 import 'package:admin/repositories/activity/repository.dart';
 import 'package:redux/redux.dart';
@@ -37,11 +38,11 @@ class ActivitiesMiddleware implements MiddlewareClass<AppState> {
   ) async {
     try {
       await activitiesRepository.create(action.activity);
-      if (store.state.usersState is UsersLoadedAction) {
+      final activitiesState = store.state.activitiesState;
+      if (activitiesState is ActivitiesLoaded) {
         store.dispatch(
           ActivitiesLoadedAction(
-            (store.state.usersState as ActivitiesLoadedAction).activities
-              ..add(action.activity),
+            activitiesState.activities..add(action.activity),
           ),
         );
       }
