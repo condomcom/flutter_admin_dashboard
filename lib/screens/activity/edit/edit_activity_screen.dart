@@ -27,9 +27,11 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
 
   var _startDate = DateTime.now();
   var _finalDate = DateTime.now();
+  var _currentSliderValue = 20.0;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -102,6 +104,29 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
                         ),
                       ],
                     ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.all(8.0).copyWith(bottom: 0.0),
+                          child: Text(
+                            'Количество участников ${_currentSliderValue.toInt()}',
+                          ),
+                        ),
+                        Slider(
+                          value: _currentSliderValue,
+                          max: 100,
+                          divisions: 20,
+                          label: _currentSliderValue.round().toString(),
+                          onChanged: (double value) {
+                            setState(() {
+                              _currentSliderValue = value;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -117,7 +142,7 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
                   shortName: _shortNameController.text,
                   fullName: _nameController.text,
                   description: _descriptionController.text,
-                  participantsLimit: 10,
+                  participantsLimit: _currentSliderValue.toInt(),
                 );
                 Get.get<Store<AppState>>().dispatch(CreateActivityAction(
                   activity,
