@@ -24,7 +24,10 @@ class ClientFactory {
       BaseOptions(
         baseUrl: '$baseUrl/$apiPath',
         headers: {
-          'Authorization': 'auth $apiKey',
+          Headers.contentTypeHeader: 'application/x-www-form-urlencoded',
+          if (apiKey.isNotEmpty) ...{
+            'Authorization': 'auth $apiKey',
+          }
         },
       ),
     );

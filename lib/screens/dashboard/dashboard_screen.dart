@@ -1,16 +1,16 @@
+import 'package:admin/controllers/menu_provider.dart';
 import 'package:admin/redux/redux.dart';
+import 'package:admin/screens/activity/activity.dart';
+import 'package:admin/screens/conference/conference.dart';
 import 'package:admin/screens/dashboard/components/components.dart';
-import 'package:admin/screens/dashboard/components/my_fields.dart';
+import 'package:admin/screens/home/home.dart';
+import 'package:admin/screens/user/user.dart';
 import 'package:admin/utils/constants.dart';
 import 'package:admin/utils/di/di.dart';
-import 'package:admin/utils/responsive.dart';
-import 'package:admin/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 import 'components/header.dart';
-
-import 'components/storage_details.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -33,41 +33,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             Header(),
             SizedBox(height: defaultPadding),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    children: [
-                      // MyFiles(),
-                      // SizedBox(height: defaultPadding),
-                      // RecentFiles(),
-                      UsersTableLoader(),
-                      SizedBox(height: defaultPadding),
-                      ConferencesTableLoader(),
-                      SizedBox(height: defaultPadding),
-                      ConferencesTableLoader(),
-                      SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context))
-                        SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context)) StarageDetails(),
-                    ],
-                  ),
-                ),
-                if (!Responsive.isMobile(context))
-                  SizedBox(width: defaultPadding),
-                // On Mobile means if the screen is less than 850 we dont want to show it
-                if (!Responsive.isMobile(context))
-                  Expanded(
-                    flex: 2,
-                    child: StarageDetails(),
-                  ),
-              ],
-            )
+            _DashboardBody(),
           ],
         ),
       ),
     );
+  }
+}
+
+class _DashboardBody extends StatelessWidget {
+  const _DashboardBody({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final menuProvider = Provider.of<MenuProvider>(context);
+    switch (menuProvider.selectedPageIndex) {
+      case 1:
+        return EditConferencePage(
+          onCompleted: () => menuProvider.selectedPageIndex = 0,
+        );
+      case 2:
+        return EditUserPage(
+          onCompleted: () => menuProvider.selectedPageIndex = 0,
+        );
+      case 3:
+        return ActivityEditPage(
+          onCompleted: () => menuProvider.selectedPageIndex = 0,
+        );
+      case 0:
+      default:
+        return HomePage();
+    }
   }
 }

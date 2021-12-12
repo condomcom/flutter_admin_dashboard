@@ -1,5 +1,7 @@
 import 'package:admin/models/conference/conference.dart';
+import 'package:admin/router/router.gr.dart';
 import 'package:admin/utils/constants.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +37,11 @@ class ConferencesTable extends StatelessWidget {
                     horizontal: defaultPadding * 1,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  AutoRouter.of(context).push(
+                    ConferenceEditScreenRoute(),
+                  );
+                },
                 icon: Icon(Icons.add),
                 label: Text("Добавить"),
               ),

@@ -1,3 +1,4 @@
+import 'package:admin/redux/app/activities/activities.dart';
 import 'package:admin/redux/app/conferences/conferences.dart';
 import 'package:admin/redux/app/state.dart';
 import 'package:admin/redux/app/users/actions.dart';
@@ -16,6 +17,12 @@ final appReducer = combineReducers<AppState>([
   ),
   TypedReducer<AppState, ConferencesLoadedAction>(
     _onConferencesLoaded,
+  ),
+  TypedReducer<AppState, ActivitiesLoadingFailureAction>(
+    _onActivitiesLoadingFailure,
+  ),
+  TypedReducer<AppState, ActivitiesLoadedAction>(
+    _onActivitiesLoaded,
   ),
 ]);
 
@@ -39,4 +46,15 @@ AppState _onConferencesLoadingFailure(
 AppState _onConferencesLoaded(AppState state, ConferencesLoadedAction action) =>
     state.copyWith(
       conferencesState: ConferencesLoaded(action.conferences),
+    );
+
+AppState _onActivitiesLoadingFailure(
+        AppState state, ActivitiesLoadingFailureAction action) =>
+    state.copyWith(
+      activitiesState: ActivitiesLoadingFailure(),
+    );
+
+AppState _onActivitiesLoaded(AppState state, ActivitiesLoadedAction action) =>
+    state.copyWith(
+      activitiesState: ActivitiesLoaded(action.activities),
     );
