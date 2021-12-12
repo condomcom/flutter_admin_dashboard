@@ -7,6 +7,7 @@ import 'package:admin/utils/responsive.dart';
 import 'package:admin/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:group_button/group_button.dart';
 import 'package:redux/redux.dart';
 import 'components/header.dart';
 
@@ -24,8 +25,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
   }
 
+  int _selectedTable = 0;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.all(defaultPadding),
@@ -33,6 +37,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             Header(),
             SizedBox(height: defaultPadding),
+            if (!Responsive.isMobile(context))
+              Align(
+                alignment: Alignment.centerLeft,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: GroupButton(
+                      spacing: 10,
+                      isRadio: true,
+                      selectedButton: _selectedTable,
+                      groupingType: GroupingType.row,
+                      alignment: Alignment.centerLeft,
+                      groupRunAlignment: GroupRunAlignment.start,
+                      mainGroupAlignment: MainGroupAlignment.start,
+                      crossGroupAlignment: CrossGroupAlignment.start,
+                      unselectedColor: theme.canvasColor,
+                      unselectedTextStyle: theme.textTheme.bodyText1!
+                          .copyWith(color: Colors.white),
+                      buttons: const [
+                        'Пользователи',
+                        'Конференции',
+                        'Активности'
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                      onSelected: (i, selected) =>
+                          setState(() => _selectedTable = i),
+                    ),
+                  ),
+                ),
+              ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,18 +75,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   flex: 5,
                   child: Column(
                     children: [
-                      // MyFiles(),
-                      // SizedBox(height: defaultPadding),
-                      // RecentFiles(),
-                      UsersTableLoader(),
+                      _buildCurrentTable(),
                       SizedBox(height: defaultPadding),
-                      ConferencesTableLoader(),
-                      SizedBox(height: defaultPadding),
-                      ActivitiesTableLoader(),
-                      SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context))
+                      if (Responsive.isMobile(context)) ...[
+                        ConferencesTableLoader(),
                         SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context)) StarageDetails(),
+                        ActivitiesTableLoader(),
+                        SizedBox(height: defaultPadding),
+                        StarageDetails(),
+                      ],
                     ],
                   ),
                 ),
@@ -69,5 +101,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildCurrentTable() {
+    switch (_selectedTable) {
+      case 1:
+        return ConferencesTableLoader();
+      case 2:
+        return ActivitiesTableLoader();
+      case 0:
+      default:
+        return UsersTableLoader();
+    }
   }
 }
