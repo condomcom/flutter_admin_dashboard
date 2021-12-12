@@ -39,7 +39,7 @@ class ActivitiesTable extends StatelessWidget {
                 ),
                 onPressed: () {
                   AutoRouter.of(context).push(
-                    ConferenceEditScreenRoute(),
+                    ActivityEditScreenRoute(),
                   );
                 },
                 icon: Icon(Icons.add),
