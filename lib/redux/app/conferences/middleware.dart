@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:admin/redux/app/actions.dart';
+import 'package:admin/redux/app/activities/actions.dart';
 import 'package:admin/redux/app/app.dart';
 import 'package:admin/redux/app/conferences/conferences.dart';
 import 'package:admin/repositories/conference/repository.dart';
@@ -44,6 +45,8 @@ class ConferenceMiddleware implements MiddlewareClass<AppState> {
             conferecesState.conferences..add(action.conference),
           ),
         );
+      } else {
+        store.dispatch(LoadActivitiesAction());
       }
       action.onSuccesed();
     } on Exception catch (e) {

@@ -45,6 +45,8 @@ class ActivitiesMiddleware implements MiddlewareClass<AppState> {
             activitiesState.activities..add(action.activity),
           ),
         );
+      } else {
+        store.dispatch(LoadActivitiesAction());
       }
       action.onSuccesed();
     } on Exception catch (e) {
