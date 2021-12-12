@@ -8,11 +8,11 @@ part of 'activity.dart';
 
 Activity _$ActivityFromJson(Map<String, dynamic> json) => Activity(
       json['strId'] as String,
-      json['conferenceStrId'] as String,
-      json['shortName'] as String,
-      json['fullName'] as String,
-      json['participantsLimit'] as int,
-      json['description'] as String,
+      json['conferenceStrId'] as String?,
+      json['shortName'] as String?,
+      json['fullName'] as String?,
+      json['participantsLimit'] as int?,
+      json['description'] as String?,
       DateTime.parse(json['createdAt'] as String),
       DateTime.parse(json['updatedAt'] as String),
     );
