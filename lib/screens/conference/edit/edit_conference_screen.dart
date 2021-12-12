@@ -74,6 +74,7 @@ class EditConferencePage extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 10),
             ResponsiveCenteredView(
               child: BottomButton(
                 title: 'Сохранить',
