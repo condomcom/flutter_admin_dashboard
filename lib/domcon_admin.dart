@@ -1,5 +1,7 @@
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/redux/app/activities/activities.dart';
 import 'package:admin/redux/redux.dart';
+import 'package:admin/repositories/activity/repository.dart';
 import 'package:admin/repositories/conference/repository.dart';
 import 'package:admin/repositories/user/repository.dart';
 import 'package:admin/router/router.gr.dart';
@@ -34,6 +36,9 @@ class _DomComAdminState extends State<DomComAdmin> {
   late final AbstractApiConferenceRepository _apiConferenceRepository =
       ApiConferenceRepository(_clientFactory);
 
+  late final AbstractApiActivityRepository _apiActivityRepository =
+      ApiActivityRepository(_clientFactory);
+
   late final Store<AppState> _appStore = Store<AppState>(
     appReducer,
     initialState: AppState(),
@@ -41,6 +46,7 @@ class _DomComAdminState extends State<DomComAdmin> {
       AppMiddleware(),
       UserMiddleware(_apiUserRepository),
       ConferenceMiddleware(_apiConferenceRepository),
+      ActivitiesMiddleware(_apiActivityRepository),
     ],
   );
 
@@ -56,7 +62,7 @@ class _DomComAdminState extends State<DomComAdmin> {
       store: _appStore,
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        title: 'DomCon Admin page',
+        title: 'DomCon Admin',
         theme: _getTheme(),
         routerDelegate: AutoRouterDelegate(
           widget._appRouter,

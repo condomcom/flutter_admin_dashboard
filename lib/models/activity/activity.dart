@@ -21,11 +21,11 @@ class Activity {
   @JsonKey(name: 'strId')
   final String id;
   @JsonKey(name: 'conferenceStrId')
-  final String conferenceId;
-  final String shortName;
-  final String fullName;
-  final int participantsLimit;
-  final String description;
+  final String? conferenceId;
+  final String? shortName;
+  final String? fullName;
+  final int? participantsLimit;
+  final String? description;
   final DateTime createdAt;
   final DateTime updatedAt;
 
