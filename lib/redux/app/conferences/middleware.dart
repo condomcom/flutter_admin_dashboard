@@ -37,17 +37,17 @@ class ConferenceMiddleware implements MiddlewareClass<AppState> {
   ) async {
     try {
       await conferenceRepository.create(action.conference);
-      if (store.state.usersState is UsersLoadedAction) {
+      final conferecesState = store.state.conferencesState;
+      if (conferecesState is ConferencesLoaded) {
         store.dispatch(
           ConferencesLoadedAction(
-            (store.state.usersState as ConferencesLoadedAction).conferences
-              ..add(action.conference),
+            conferecesState.conferences..add(action.conference),
           ),
         );
       }
       action.onSuccesed();
     } on Exception catch (e) {
-      log('Create user exception\n$e');
+      log('Create conference exception\n$e');
     }
   }
 
