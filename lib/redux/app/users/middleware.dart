@@ -37,13 +37,13 @@ class UserMiddleware implements MiddlewareClass<AppState> {
   ) async {
     try {
       await usersRepository.create(action.user);
-      if (store.state.usersState is UsersLoadedAction) {
+      final userState = store.state.usersState;
+      if (userState is UsersLoaded) {
         store.dispatch(
-          UsersLoadedAction(
-            (store.state.usersState as UsersLoadedAction).users
-              ..add(action.user),
-          ),
+          UsersLoadedAction(userState.users..add(action.user)),
         );
+      } else {
+        store.dispatch(LoadUsersAction());
       }
       action.onSuccesed();
     } on Exception catch (e) {
