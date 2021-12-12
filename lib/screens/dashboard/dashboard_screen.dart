@@ -49,7 +49,9 @@ class _DashboardBody extends StatelessWidget {
     final menuProvider = Provider.of<MenuProvider>(context);
     switch (menuProvider.selectedPageIndex) {
       case 1:
-        return EditConferencePage();
+        return EditConferencePage(
+          onComplete: () {},
+        );
       case 0:
       default:
         return HomePage();

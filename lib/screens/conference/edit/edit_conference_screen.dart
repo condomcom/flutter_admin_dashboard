@@ -3,6 +3,7 @@ import 'package:admin/redux/redux.dart';
 import 'package:admin/utils/di/di.dart';
 import 'package:admin/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:group_button/group_button.dart';
 import 'package:redux/redux.dart';
 
 class ConferenceEditScreen extends StatelessWidget {
@@ -23,7 +24,13 @@ class ConferenceEditScreen extends StatelessWidget {
               : 'Редактирование конференции',
         ),
       ),
-      body: EditConferencePage(),
+      body: SingleChildScrollView(
+        child: EditConferencePage(
+          onComplete: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
     );
   }
 }
@@ -31,7 +38,10 @@ class ConferenceEditScreen extends StatelessWidget {
 class EditConferencePage extends StatelessWidget {
   EditConferencePage({
     Key? key,
+    required this.onComplete,
   }) : super(key: key);
+
+  final Function() onComplete;
 
   final _shortNameController = TextEditingController();
   final _nameController = TextEditingController();
@@ -39,55 +49,52 @@ class EditConferencePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          child: ResponsiveCenteredView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  CommonTextField(
-                    hintText: 'Краткое название',
-                    controller: _shortNameController,
-                  ),
-                  const SizedBox(height: 10),
-                  CommonTextField(
-                    hintText: 'Название',
-                    controller: _nameController,
-                  ),
-                  const SizedBox(height: 10),
-                  CommonTextField(
-                    hintText: 'Описание',
-                    controller: _descriptionController,
-                  ),
-                ],
+    return ResponsiveView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                const SizedBox(height: 20),
+                CommonTextField(
+                  hintText: 'Краткое название',
+                  controller: _shortNameController,
+                ),
+                const SizedBox(height: 10),
+                CommonTextField(
+                  hintText: 'Название',
+                  controller: _nameController,
+                ),
+                const SizedBox(height: 10),
+                CommonTextField(
+                  hintText: 'Описание',
+                  controller: _descriptionController,
+                ),
+              ],
+            ),
+            ResponsiveCenteredView(
+              child: BottomButton(
+                title: 'Сохранить',
+                onTap: () {
+                  final conference = Conference(
+                    shortName: _shortNameController.text,
+                    fullName: _nameController.text,
+                    description: _descriptionController.text,
+                  );
+                  Get.get<Store<AppState>>().dispatch(
+                    CreateConferenceAction(
+                      conference,
+                      onSuccesed: onComplete,
+                    ),
+                  );
+                },
               ),
             ),
-          ),
+          ],
         ),
-        ResponsiveCenteredView(
-          child: BottomButton(
-            title: 'Сохранить',
-            onTap: () {
-              final conference = Conference(
-                shortName: _shortNameController.text,
-                fullName: _nameController.text,
-                description: _descriptionController.text,
-              );
-              Get.get<Store<AppState>>().dispatch(
-                CreateConferenceAction(
-                  conference,
-                  onSuccesed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
