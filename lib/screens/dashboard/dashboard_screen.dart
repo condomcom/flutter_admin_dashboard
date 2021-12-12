@@ -47,7 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       SizedBox(height: defaultPadding),
                       ConferencesTableLoader(),
                       SizedBox(height: defaultPadding),
-                      ConferencesTableLoader(),
+                      ActivitiesTableLoader(),
                       SizedBox(height: defaultPadding),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
