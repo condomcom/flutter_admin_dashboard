@@ -1,4 +1,4 @@
-import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/controllers/menu_provider.dart';
 import 'package:admin/redux/app/activities/activities.dart';
 import 'package:admin/redux/redux.dart';
 import 'package:admin/repositories/activity/repository.dart';
@@ -75,7 +75,7 @@ class _DomComAdminState extends State<DomComAdmin> {
           return MultiProvider(
             providers: [
               ChangeNotifierProvider(
-                create: (context) => MenuController(),
+                create: (context) => MenuProvider(),
               ),
             ],
             child: router!,

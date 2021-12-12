@@ -1,9 +1,12 @@
+import 'package:admin/controllers/menu_provider.dart';
 import 'package:admin/redux/redux.dart';
+import 'package:admin/screens/conference/conference.dart';
 import 'package:admin/screens/dashboard/components/components.dart';
 import 'package:admin/screens/home/home.dart';
 import 'package:admin/utils/constants.dart';
 import 'package:admin/utils/di/di.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 import 'components/header.dart';
 
@@ -28,10 +31,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             Header(),
             SizedBox(height: defaultPadding),
-            HomePage(),
+            _DashboardBody(),
           ],
         ),
       ),
     );
+  }
+}
+
+class _DashboardBody extends StatelessWidget {
+  const _DashboardBody({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final menuProvider = Provider.of<MenuProvider>(context);
+    switch (menuProvider.selectedPageIndex) {
+      case 1:
+        return EditConferencePage();
+      case 0:
+      default:
+        return HomePage();
+    }
   }
 }

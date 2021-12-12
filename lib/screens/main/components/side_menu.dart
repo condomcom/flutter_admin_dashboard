@@ -1,4 +1,6 @@
+import 'package:admin/controllers/menu_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -7,6 +9,7 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final menuProvider = Provider.of<MenuProvider>(context);
     return Drawer(
       child: ListView(
         children: [
@@ -16,22 +19,22 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Главная",
             iconData: Icons.home,
-            press: () {},
+            press: () => menuProvider.selectedPageIndex = 0,
           ),
           DrawerListTile(
             title: "Добавить коференицию",
             iconData: Icons.event,
-            press: () {},
+            press: () => menuProvider.selectedPageIndex = 1,
           ),
           DrawerListTile(
             title: "Добавить пользователя",
             iconData: Icons.people,
-            press: () {},
+            press: () => menuProvider.selectedPageIndex = 2,
           ),
           DrawerListTile(
             title: "Добавить активность",
             iconData: Icons.attractions,
-            press: () {},
+            press: () => menuProvider.selectedPageIndex = 3,
           ),
         ],
       ),
