@@ -13,6 +13,8 @@ class Activity {
     this.description,
     this.createdAt,
     this.updatedAt,
+    this.startsAt,
+    this.finishesAt,
   });
 
   factory Activity.fromJson(Map<String, dynamic> json) =>
@@ -26,6 +28,8 @@ class Activity {
   final String? fullName;
   final int? participantsLimit;
   final String? description;
+  final DateTime? startsAt;
+  final DateTime? finishesAt;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 

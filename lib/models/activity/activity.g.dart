@@ -19,6 +19,12 @@ Activity _$ActivityFromJson(Map<String, dynamic> json) => Activity(
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
+      startsAt: json['startsAt'] == null
+          ? null
+          : DateTime.parse(json['startsAt'] as String),
+      finishesAt: json['finishesAt'] == null
+          ? null
+          : DateTime.parse(json['finishesAt'] as String),
     );
 
 Map<String, dynamic> _$ActivityToJson(Activity instance) => <String, dynamic>{
@@ -28,6 +34,8 @@ Map<String, dynamic> _$ActivityToJson(Activity instance) => <String, dynamic>{
       'fullName': instance.fullName,
       'participantsLimit': instance.participantsLimit,
       'description': instance.description,
+      'startsAt': instance.startsAt?.toIso8601String(),
+      'finishesAt': instance.finishesAt?.toIso8601String(),
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
     };
