@@ -65,7 +65,7 @@ class UsersTable extends StatelessWidget {
               ],
               rows: List.generate(
                 users.length,
-                (index) => _buildDataRow(users[index]),
+                (index) => _buildDataRow(context, users[index]),
               ),
             ),
           ),
@@ -74,8 +74,15 @@ class UsersTable extends StatelessWidget {
     );
   }
 
-  DataRow _buildDataRow(User user) {
+  DataRow _buildDataRow(BuildContext context, User user) {
     return DataRow(
+      onSelectChanged: (_) {
+        AutoRouter.of(context).push(
+          UserEditScreenRoute(
+            user: user,
+          ),
+        );
+      },
       cells: [
         DataCell(Text('${user.name} ${user.patronymic} ${user.surname}')),
         DataCell(Text(user.email ?? '')),
