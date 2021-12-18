@@ -30,6 +30,20 @@ class UserMiddleware implements MiddlewareClass<AppState> {
       _createUser(action, store);
     } else if (action is UpdateUserAction) {
       _editUser(action, store);
+    } else if (action is DeleteUserAction) {
+      _deleteUser(action, store);
+    }
+  }
+
+  Future<void> _deleteUser(
+      DeleteUserAction action, Store<AppState> store) async {
+    try {
+      await usersRepository.delete(action.userId);
+      store.dispatch(LoadUsersAction());
+      action.onSuccesed();
+    } on Exception catch (e) {
+      // store.dispatch(UsersLoadingFailureAction());
+      log('Delete user exception\n$e');
     }
   }
 
