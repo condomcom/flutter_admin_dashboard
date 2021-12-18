@@ -165,16 +165,36 @@ class _ActivityEditPageState extends State<ActivityEditPage> {
               ],
             ),
             ResponsiveCenteredView(
-              child: BottomButton(
-                padding: EdgeInsets.zero,
-                title: 'Сохранить',
-                onTap: _save,
+              child: Column(
+                children: [
+                  BottomButton(
+                    padding: EdgeInsets.zero,
+                    title: 'Сохранить',
+                    onTap: _save,
+                  ),
+                  if (widget.activity != null) ...[
+                    const SizedBox(height: 10),
+                    BottomButton(
+                      padding: EdgeInsets.zero,
+                      backgroundColor: Colors.red,
+                      title: 'Удалить',
+                      onTap: _delete,
+                    ),
+                  ],
+                ],
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _delete() {
+    Get.get<Store<AppState>>().dispatch(DeleteActivityAction(
+      widget.activity!.id!,
+      onSuccesed: widget.onCompleted,
+    ));
   }
 
   void _save() {
