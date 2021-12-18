@@ -1,5 +1,6 @@
 import 'package:admin/models/user/user.dart';
 import 'package:admin/repositories/user/repository.dart';
+import 'package:admin/utils/formaters/formaters.dart';
 import 'package:admin/utils/http/dio_factory.dart';
 import 'package:dio/dio.dart';
 
@@ -25,8 +26,11 @@ class ApiUserRepository implements AbstractApiUserRepository {
 
   @override
   Future<void> create(User user) async {
-    final data = user.toJson();
-    await _dio.post('$_route', data: data);
+    final data = HttpRequestFormater(user.toJson()).clean();
+    await _dio.post(
+      '$_route',
+      data: data,
+    );
   }
 
   @override
@@ -36,6 +40,9 @@ class ApiUserRepository implements AbstractApiUserRepository {
 
   @override
   Future<void> update(User user) async {
-    await _dio.put('$_route/${user.id}', data: user.toJson());
+    await _dio.put(
+      '$_route/${user.id}',
+      data: HttpRequestFormater(user.toJson()).clean(),
+    );
   }
 }
