@@ -30,7 +30,7 @@ class ApiActivityRepository implements AbstractApiActivityRepository {
   Future<void> create(Activity user) async {
     await _dio.post(
       '$_route',
-      data: HttpRequestFormater(user.toJson()).clean(),
+      data: HttpRequestFormater(user.toJson()).clean().data,
     );
   }
 
@@ -43,7 +43,7 @@ class ApiActivityRepository implements AbstractApiActivityRepository {
   Future<void> update(Activity user) async {
     await _dio.put(
       '$_route/${user.id}',
-      data: HttpRequestFormater(user.toJson()).clean(),
+      data: HttpRequestFormater(user.toJson()).clean().data,
     );
   }
 }

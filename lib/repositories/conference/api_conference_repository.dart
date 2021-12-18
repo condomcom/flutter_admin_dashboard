@@ -30,7 +30,7 @@ class ApiConferenceRepository implements AbstractApiConferenceRepository {
   Future<void> create(Conference user) async {
     await _dio.post(
       '$_route',
-      data: HttpRequestFormater(user.toJson()).clean(),
+      data: HttpRequestFormater(user.toJson()).clean().data,
     );
   }
 
@@ -43,7 +43,7 @@ class ApiConferenceRepository implements AbstractApiConferenceRepository {
   Future<void> update(Conference user) async {
     await _dio.put(
       '$_route/${user.id}',
-      data: HttpRequestFormater(user.toJson()).clean(),
+      data: HttpRequestFormater(user.toJson()).clean().data,
     );
   }
 }

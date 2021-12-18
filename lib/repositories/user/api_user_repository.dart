@@ -26,7 +26,7 @@ class ApiUserRepository implements AbstractApiUserRepository {
 
   @override
   Future<void> create(User user) async {
-    final data = HttpRequestFormater(user.toJson()).clean();
+    final data = HttpRequestFormater(user.toJson()).clean().data;
     await _dio.post(
       '$_route',
       data: data,
@@ -42,7 +42,7 @@ class ApiUserRepository implements AbstractApiUserRepository {
   Future<void> update(User user) async {
     await _dio.put(
       '$_route/${user.id}',
-      data: HttpRequestFormater(user.toJson()).clean(),
+      data: HttpRequestFormater(user.toJson()).clean().data,
     );
   }
 }
