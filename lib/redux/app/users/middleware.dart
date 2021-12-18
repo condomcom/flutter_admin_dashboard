@@ -28,6 +28,19 @@ class UserMiddleware implements MiddlewareClass<AppState> {
       _loadUsers(store);
     } else if (action is CreateUserAction) {
       _createUser(action, store);
+    } else if (action is UpdateUserAction) {
+      _editUser(action, store);
+    }
+  }
+
+  Future<void> _editUser(UpdateUserAction action, Store<AppState> store) async {
+    try {
+      await usersRepository.update(action.user);
+      store.dispatch(LoadUsersAction());
+      action.onSuccesed();
+    } on Exception catch (e) {
+      // store.dispatch(UsersLoadingFailureAction());
+      log('Edit user exception\n$e');
     }
   }
 

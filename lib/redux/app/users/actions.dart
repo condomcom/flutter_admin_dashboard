@@ -14,8 +14,8 @@ class UsersLoadedAction extends UserAction {
   final List<User> users;
 }
 
-class EditUserAction extends UserAction {
-  EditUserAction(this.user, {required this.onSuccesed});
+class UpdateUserAction extends UserAction {
+  UpdateUserAction(this.user, {required this.onSuccesed});
   final User user;
   final Function() onSuccesed;
 }
