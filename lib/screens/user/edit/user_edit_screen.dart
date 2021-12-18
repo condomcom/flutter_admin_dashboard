@@ -32,6 +32,7 @@ class _UserEditScreenState extends State<UserEditScreen> {
       ),
       body: SingleChildScrollView(
         child: EditUserPage(
+          user: widget.user,
           onCompleted: () {
             Navigator.pop(context);
           },
@@ -42,7 +43,13 @@ class _UserEditScreenState extends State<UserEditScreen> {
 }
 
 class EditUserPage extends StatelessWidget {
-  EditUserPage({Key? key, required this.onCompleted}) : super(key: key);
+  EditUserPage({
+    Key? key,
+    this.user,
+    required this.onCompleted,
+  }) : super(key: key);
+
+  final User? user;
   final Function() onCompleted;
 
   final _nameController = TextEditingController();
@@ -100,29 +107,53 @@ class EditUserPage extends StatelessWidget {
               child: BottomButton(
                 title: 'Сохранить',
                 padding: EdgeInsets.zero,
-                onTap: () {
-                  final user = User(
-                    name: _nameController.text,
-                    surname: _lastNameController.text,
-                    patronymic: _middleNameController.text,
-                    email: _emailController.text,
-                    phone: _phoneController.text,
-                    //TODO:
-                    createdAt: DateTime.now(),
-                    updatedAt: DateTime.now(),
-                    birthDate: DateTime.now(),
-                  );
-                  Get.get<Store<AppState>>().dispatch(
-                    CreateUserAction(
-                      user,
-                      onSuccesed: onCompleted,
-                    ),
-                  );
-                },
+                onTap: _save,
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _save() {
+    final userForEdit = this.user;
+    if (userForEdit != null) {
+      final user = userForEdit.copyWith(
+        name: _nameController.text,
+        surname: _lastNameController.text,
+        patronymic: _middleNameController.text,
+        email: _emailController.text,
+        phone: _phoneController.text,
+        //TODO:
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        birthDate: DateTime.now(),
+      );
+      Get.get<Store<AppState>>().dispatch(
+        UpdateUserAction(
+          user,
+          onSuccesed: onCompleted,
+        ),
+      );
+      return;
+    }
+
+    final user = User(
+      name: _nameController.text,
+      surname: _lastNameController.text,
+      patronymic: _middleNameController.text,
+      email: _emailController.text,
+      phone: _phoneController.text,
+      //TODO:
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      birthDate: DateTime.now(),
+    );
+    Get.get<Store<AppState>>().dispatch(
+      CreateUserAction(
+        user,
+        onSuccesed: onCompleted,
       ),
     );
   }
