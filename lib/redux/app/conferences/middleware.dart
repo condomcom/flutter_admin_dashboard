@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:admin/redux/app/actions.dart';
-import 'package:admin/redux/app/activities/actions.dart';
 import 'package:admin/redux/app/app.dart';
 import 'package:admin/redux/app/conferences/conferences.dart';
 import 'package:admin/repositories/conference/repository.dart';
@@ -50,7 +49,7 @@ class ConferenceMiddleware implements MiddlewareClass<AppState> {
           ),
         );
       } else {
-        store.dispatch(LoadActivitiesAction());
+        store.dispatch(LoadConferencesAction());
       }
       action.onSuccesed();
     } on Exception catch (e) {
@@ -73,7 +72,7 @@ class ConferenceMiddleware implements MiddlewareClass<AppState> {
   ) async {
     try {
       await conferenceRepository.update(action.conference);
-      store.dispatch(LoadActivitiesAction());
+      store.dispatch(LoadConferencesAction());
       action.onSuccesed();
     } on Exception catch (e) {
       // store.dispatch(ConferencesLoadingFailureAction());
@@ -87,7 +86,7 @@ class ConferenceMiddleware implements MiddlewareClass<AppState> {
   ) async {
     try {
       await conferenceRepository.delete(action.conferenceId);
-      store.dispatch(LoadActivitiesAction());
+      store.dispatch(LoadConferencesAction());
       action.onSuccesed();
     } on Exception catch (e) {
       // store.dispatch(ConferencesLoadingFailureAction());
