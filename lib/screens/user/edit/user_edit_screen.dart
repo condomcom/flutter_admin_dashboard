@@ -42,7 +42,7 @@ class _UserEditScreenState extends State<UserEditScreen> {
   }
 }
 
-class EditUserPage extends StatelessWidget {
+class EditUserPage extends StatefulWidget {
   EditUserPage({
     Key? key,
     this.user,
@@ -52,11 +52,29 @@ class EditUserPage extends StatelessWidget {
   final User? user;
   final Function() onCompleted;
 
+  @override
+  State<EditUserPage> createState() => _EditUserPageState();
+}
+
+class _EditUserPageState extends State<EditUserPage> {
   final _nameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _middleNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    final u = widget.user;
+    if (u != null) {
+      _nameController.text = u.name ?? '';
+      _lastNameController.text = u.surname ?? '';
+      _middleNameController.text = u.patronymic ?? '';
+      _emailController.text = u.email ?? '';
+      _phoneController.text = u.phone ?? '';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +129,7 @@ class EditUserPage extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     onTap: _save,
                   ),
-                  if (this.user != null) ...[
+                  if (this.widget.user != null) ...[
                     const SizedBox(height: 10),
                     BottomButton(
                       title: 'Удалить',
@@ -132,14 +150,14 @@ class EditUserPage extends StatelessWidget {
   void _delete() {
     Get.get<Store<AppState>>().dispatch(
       DeleteUserAction(
-        this.user!.id!,
-        onSuccesed: onCompleted,
+        widget.user!.id!,
+        onSuccesed: widget.onCompleted,
       ),
     );
   }
 
   void _save() {
-    final userForEdit = this.user;
+    final userForEdit = widget.user;
     if (userForEdit != null) {
       final user = userForEdit.copyWith(
         name: _nameController.text,
@@ -155,7 +173,7 @@ class EditUserPage extends StatelessWidget {
       Get.get<Store<AppState>>().dispatch(
         UpdateUserAction(
           user,
-          onSuccesed: onCompleted,
+          onSuccesed: widget.onCompleted,
         ),
       );
       return;
@@ -175,7 +193,7 @@ class EditUserPage extends StatelessWidget {
     Get.get<Store<AppState>>().dispatch(
       CreateUserAction(
         user,
-        onSuccesed: onCompleted,
+        onSuccesed: widget.onCompleted,
       ),
     );
   }
