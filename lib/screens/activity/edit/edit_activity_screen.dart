@@ -59,14 +59,29 @@ class ActivityEditPage extends StatefulWidget {
 
 class _ActivityEditPageState extends State<ActivityEditPage> {
   final _shortNameController = TextEditingController();
-
   final _nameController = TextEditingController();
-
   final _descriptionController = TextEditingController();
 
-  var _startDate = DateTime.now();
-  var _finalDate = DateTime.now();
-  var _currentSliderValue = 20.0;
+  late DateTime _startDate;
+  late DateTime _finalDate;
+  late double _currentSliderValue;
+
+  @override
+  void initState() {
+    final activityForEdit = widget.activity;
+    if (activityForEdit != null) {
+      _nameController.text = activityForEdit.fullName ?? '';
+      _shortNameController.text = activityForEdit.shortName ?? '';
+      _descriptionController.text = activityForEdit.description ?? '';
+      setState(() {
+        _startDate = activityForEdit.startsAt ?? DateTime.now();
+        _finalDate = activityForEdit.finishesAt ?? DateTime.now();
+        _currentSliderValue =
+            (activityForEdit.participantsLimit ?? 20.0).toDouble();
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

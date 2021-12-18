@@ -32,7 +32,7 @@ class ApiConferenceRepository implements AbstractApiConferenceRepository {
 
   @override
   Future<void> delete(String id) async {
-    await _dio.post('$_route/$id');
+    await _dio.delete('$_route/$id');
   }
 
   @override
