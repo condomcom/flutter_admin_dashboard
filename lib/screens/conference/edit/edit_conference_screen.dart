@@ -95,10 +95,21 @@ class _EditConferencePageState extends State<EditConferencePage> {
             ),
             const SizedBox(height: 10),
             ResponsiveCenteredView(
-              child: BottomButton(
-                title: 'Сохранить',
-                padding: EdgeInsets.zero,
-                onTap: _save,
+              child: Column(
+                children: [
+                  BottomButton(
+                    title: 'Сохранить',
+                    padding: EdgeInsets.zero,
+                    onTap: _save,
+                  ),
+                  const SizedBox(height: 10),
+                  BottomButton(
+                    title: 'Удалить',
+                    padding: EdgeInsets.zero,
+                    backgroundColor: Colors.red,
+                    onTap: _delete,
+                  ),
+                ],
               ),
             ),
           ],
@@ -107,7 +118,33 @@ class _EditConferencePageState extends State<EditConferencePage> {
     );
   }
 
+  void _delete() {
+    Get.get<Store<AppState>>().dispatch(
+      DeleteConferenceAction(
+        widget.conference!.id!,
+        onSuccesed: widget.onCompleted,
+      ),
+    );
+  }
+
   void _save() {
+    final conferenceForEdit = widget.conference;
+
+    if (conferenceForEdit != null) {
+      final conference = conferenceForEdit.copyWith(
+        shortName: _shortNameController.text,
+        fullName: _nameController.text,
+        description: _descriptionController.text,
+      );
+      Get.get<Store<AppState>>().dispatch(
+        UpdateConferenceAction(
+          conference,
+          onSuccesed: widget.onCompleted,
+        ),
+      );
+      return;
+    }
+
     final conference = Conference(
       shortName: _shortNameController.text,
       fullName: _nameController.text,

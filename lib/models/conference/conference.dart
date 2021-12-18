@@ -25,4 +25,22 @@ class Conference {
   final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() => _$ConferenceToJson(this);
+
+  Conference copyWith({
+    String? id,
+    String? shortName,
+    String? fullName,
+    String? description,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return Conference(
+      id: id ?? this.id,
+      shortName: shortName ?? this.shortName,
+      fullName: fullName ?? this.fullName,
+      description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }
