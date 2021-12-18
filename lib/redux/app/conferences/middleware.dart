@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:admin/redux/app/actions.dart';
-import 'package:admin/redux/app/activities/actions.dart';
 import 'package:admin/redux/app/app.dart';
 import 'package:admin/redux/app/conferences/conferences.dart';
 import 'package:admin/repositories/conference/repository.dart';
@@ -29,6 +28,10 @@ class ConferenceMiddleware implements MiddlewareClass<AppState> {
       _loadConferences(store);
     } else if (action is CreateConferenceAction) {
       _createConference(action, store);
+    } else if (action is UpdateConferenceAction) {
+      _updateConferences(action, store);
+    } else if (action is DeleteConferenceAction) {
+      _deleteConferences(action, store);
     }
   }
 
@@ -46,7 +49,7 @@ class ConferenceMiddleware implements MiddlewareClass<AppState> {
           ),
         );
       } else {
-        store.dispatch(LoadActivitiesAction());
+        store.dispatch(LoadConferencesAction());
       }
       action.onSuccesed();
     } on Exception catch (e) {
@@ -60,6 +63,34 @@ class ConferenceMiddleware implements MiddlewareClass<AppState> {
       store.dispatch(ConferencesLoadedAction(conferences));
     } on Exception catch (_) {
       store.dispatch(ConferencesLoadingFailureAction());
+    }
+  }
+
+  Future<void> _updateConferences(
+    UpdateConferenceAction action,
+    Store<AppState> store,
+  ) async {
+    try {
+      await conferenceRepository.update(action.conference);
+      store.dispatch(LoadConferencesAction());
+      action.onSuccesed();
+    } on Exception catch (e) {
+      // store.dispatch(ConferencesLoadingFailureAction());
+      log('Update conference exception\n$e');
+    }
+  }
+
+  Future<void> _deleteConferences(
+    DeleteConferenceAction action,
+    Store<AppState> store,
+  ) async {
+    try {
+      await conferenceRepository.delete(action.conferenceId);
+      store.dispatch(LoadConferencesAction());
+      action.onSuccesed();
+    } on Exception catch (e) {
+      // store.dispatch(ConferencesLoadingFailureAction());
+      log('Delete conference exception\n$e');
     }
   }
 }

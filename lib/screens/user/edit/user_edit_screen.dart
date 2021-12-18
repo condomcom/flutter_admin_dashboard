@@ -32,6 +32,7 @@ class _UserEditScreenState extends State<UserEditScreen> {
       ),
       body: SingleChildScrollView(
         child: EditUserPage(
+          user: widget.user,
           onCompleted: () {
             Navigator.pop(context);
           },
@@ -41,15 +42,39 @@ class _UserEditScreenState extends State<UserEditScreen> {
   }
 }
 
-class EditUserPage extends StatelessWidget {
-  EditUserPage({Key? key, required this.onCompleted}) : super(key: key);
+class EditUserPage extends StatefulWidget {
+  EditUserPage({
+    Key? key,
+    this.user,
+    required this.onCompleted,
+  }) : super(key: key);
+
+  final User? user;
   final Function() onCompleted;
 
+  @override
+  State<EditUserPage> createState() => _EditUserPageState();
+}
+
+class _EditUserPageState extends State<EditUserPage> {
   final _nameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _middleNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    final u = widget.user;
+    if (u != null) {
+      _nameController.text = u.name ?? '';
+      _lastNameController.text = u.surname ?? '';
+      _middleNameController.text = u.patronymic ?? '';
+      _emailController.text = u.email ?? '';
+      _phoneController.text = u.phone ?? '';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,32 +122,78 @@ class EditUserPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ResponsiveCenteredView(
-              child: BottomButton(
-                title: 'Сохранить',
-                padding: EdgeInsets.zero,
-                onTap: () {
-                  final user = User(
-                    name: _nameController.text,
-                    surname: _lastNameController.text,
-                    patronymic: _middleNameController.text,
-                    email: _emailController.text,
-                    phone: _phoneController.text,
-                    //TODO:
-                    createdAt: DateTime.now(),
-                    updatedAt: DateTime.now(),
-                    birthDate: DateTime.now(),
-                  );
-                  Get.get<Store<AppState>>().dispatch(
-                    CreateUserAction(
-                      user,
-                      onSuccesed: onCompleted,
+              child: Column(
+                children: [
+                  BottomButton(
+                    title: 'Сохранить',
+                    padding: EdgeInsets.zero,
+                    onTap: _save,
+                  ),
+                  if (this.widget.user != null) ...[
+                    const SizedBox(height: 10),
+                    BottomButton(
+                      title: 'Удалить',
+                      padding: EdgeInsets.zero,
+                      backgroundColor: Colors.red,
+                      onTap: _delete,
                     ),
-                  );
-                },
+                  ],
+                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _delete() {
+    Get.get<Store<AppState>>().dispatch(
+      DeleteUserAction(
+        widget.user!.id!,
+        onSuccesed: widget.onCompleted,
+      ),
+    );
+  }
+
+  void _save() {
+    final userForEdit = widget.user;
+    if (userForEdit != null) {
+      final user = userForEdit.copyWith(
+        name: _nameController.text,
+        surname: _lastNameController.text,
+        patronymic: _middleNameController.text,
+        email: _emailController.text,
+        phone: _phoneController.text,
+        //TODO:
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        birthDate: DateTime.now(),
+      );
+      Get.get<Store<AppState>>().dispatch(
+        UpdateUserAction(
+          user,
+          onSuccesed: widget.onCompleted,
+        ),
+      );
+      return;
+    }
+
+    final user = User(
+      name: _nameController.text,
+      surname: _lastNameController.text,
+      patronymic: _middleNameController.text,
+      email: _emailController.text,
+      phone: _phoneController.text,
+      //TODO:
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      birthDate: DateTime.now(),
+    );
+    Get.get<Store<AppState>>().dispatch(
+      CreateUserAction(
+        user,
+        onSuccesed: widget.onCompleted,
       ),
     );
   }

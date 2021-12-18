@@ -14,4 +14,16 @@ class UsersLoadedAction extends UserAction {
   final List<User> users;
 }
 
+class UpdateUserAction extends UserAction {
+  UpdateUserAction(this.user, {required this.onSuccesed});
+  final User user;
+  final Function() onSuccesed;
+}
+
+class DeleteUserAction extends UserAction {
+  DeleteUserAction(this.userId, {required this.onSuccesed});
+  final String userId;
+  final Function() onSuccesed;
+}
+
 class UsersLoadingFailureAction extends UserAction {}

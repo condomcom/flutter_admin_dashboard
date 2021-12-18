@@ -29,6 +29,38 @@ class ActivitiesMiddleware implements MiddlewareClass<AppState> {
       _loadActivitiess(store);
     } else if (action is CreateActivityAction) {
       _createActivities(action, store);
+    } else if (action is DeleteActivityAction) {
+      _deleteActivity(action, store);
+    } else if (action is UpdateActivityAction) {
+      _updateActivity(action, store);
+    }
+  }
+
+  Future<void> _updateActivity(
+    UpdateActivityAction action,
+    Store<AppState> store,
+  ) async {
+    try {
+      await activitiesRepository.update(action.activity);
+      store.dispatch(LoadActivitiesAction());
+      action.onSuccesed();
+    } on Exception catch (_) {
+      log('Update Activity exception');
+      // store.dispatch(ActivitiesLoadingFailureAction());
+    }
+  }
+
+  Future<void> _deleteActivity(
+    DeleteActivityAction action,
+    Store<AppState> store,
+  ) async {
+    try {
+      await activitiesRepository.delete(action.activityId);
+      store.dispatch(LoadActivitiesAction());
+      action.onSuccesed();
+    } on Exception catch (_) {
+      log('Delete Activity exception');
+      // store.dispatch(ActivitiesLoadingFailureAction());
     }
   }
 

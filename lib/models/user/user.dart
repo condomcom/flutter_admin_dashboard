@@ -30,4 +30,28 @@ class User {
   final DateTime? birthDate;
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  User copyWith({
+    String? id,
+    String? name,
+    String? surname,
+    String? patronymic,
+    String? email,
+    String? phone,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? birthDate,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      surname: surname ?? this.surname,
+      patronymic: patronymic ?? this.patronymic,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      birthDate: birthDate ?? this.birthDate,
+    );
+  }
 }
