@@ -104,14 +104,36 @@ class EditUserPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ResponsiveCenteredView(
-              child: BottomButton(
-                title: 'Сохранить',
-                padding: EdgeInsets.zero,
-                onTap: _save,
+              child: Column(
+                children: [
+                  BottomButton(
+                    title: 'Сохранить',
+                    padding: EdgeInsets.zero,
+                    onTap: _save,
+                  ),
+                  if (this.user != null) ...[
+                    const SizedBox(height: 10),
+                    BottomButton(
+                      title: 'Удалить',
+                      padding: EdgeInsets.zero,
+                      backgroundColor: Colors.red,
+                      onTap: _delete,
+                    ),
+                  ],
+                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _delete() {
+    Get.get<Store<AppState>>().dispatch(
+      DeleteUserAction(
+        this.user!.id!,
+        onSuccesed: onCompleted,
       ),
     );
   }
