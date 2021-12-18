@@ -43,6 +43,7 @@ class ActivitiesMiddleware implements MiddlewareClass<AppState> {
     try {
       await activitiesRepository.update(action.activity);
       store.dispatch(LoadActivitiesAction());
+      action.onSuccesed();
     } on Exception catch (_) {
       log('Update Activity exception');
       // store.dispatch(ActivitiesLoadingFailureAction());
@@ -56,6 +57,7 @@ class ActivitiesMiddleware implements MiddlewareClass<AppState> {
     try {
       await activitiesRepository.delete(action.activityId);
       store.dispatch(LoadActivitiesAction());
+      action.onSuccesed();
     } on Exception catch (_) {
       log('Delete Activity exception');
       // store.dispatch(ActivitiesLoadingFailureAction());

@@ -33,6 +33,7 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
       ),
       body: SingleChildScrollView(
         child: ActivityEditPage(
+          activity: widget.activity,
           onCompleted: () {
             Navigator.pop(context);
           },
@@ -43,12 +44,14 @@ class _ActivityEditScreenState extends State<ActivityEditScreen> {
 }
 
 class ActivityEditPage extends StatefulWidget {
-  final Function() onCompleted;
-
   const ActivityEditPage({
     Key? key,
     required this.onCompleted,
+    this.activity,
   }) : super(key: key);
+
+  final Activity? activity;
+  final Function() onCompleted;
 
   @override
   State<ActivityEditPage> createState() => _ActivityEditPageState();
@@ -150,26 +153,44 @@ class _ActivityEditPageState extends State<ActivityEditPage> {
               child: BottomButton(
                 padding: EdgeInsets.zero,
                 title: 'Сохранить',
-                onTap: () {
-                  final activity = Activity(
-                    startsAt: _startDate,
-                    finishesAt: _finalDate,
-                    shortName: _shortNameController.text,
-                    fullName: _nameController.text,
-                    description: _descriptionController.text,
-                    participantsLimit: _currentSliderValue.toInt(),
-                  );
-                  Get.get<Store<AppState>>().dispatch(CreateActivityAction(
-                    activity,
-                    onSuccesed: widget.onCompleted,
-                  ));
-                },
+                onTap: _save,
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _save() {
+    if (widget.activity != null) {
+      final activity = widget.activity!.copyWith(
+        startsAt: _startDate,
+        finishesAt: _finalDate,
+        shortName: _shortNameController.text,
+        fullName: _nameController.text,
+        description: _descriptionController.text,
+        participantsLimit: _currentSliderValue.toInt(),
+      );
+      Get.get<Store<AppState>>().dispatch(UpdateActivityAction(
+        activity,
+        onSuccesed: widget.onCompleted,
+      ));
+      return;
+    }
+
+    final activity = Activity(
+      startsAt: _startDate,
+      finishesAt: _finalDate,
+      shortName: _shortNameController.text,
+      fullName: _nameController.text,
+      description: _descriptionController.text,
+      participantsLimit: _currentSliderValue.toInt(),
+    );
+    Get.get<Store<AppState>>().dispatch(CreateActivityAction(
+      activity,
+      onSuccesed: widget.onCompleted,
+    ));
   }
 
   Future<void> _selectDate(
