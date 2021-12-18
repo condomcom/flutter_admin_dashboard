@@ -26,6 +26,7 @@ class ConferenceEditScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: EditConferencePage(
+          conference: conference,
           onCompleted: () {
             Navigator.pop(context);
           },
@@ -35,17 +36,35 @@ class ConferenceEditScreen extends StatelessWidget {
   }
 }
 
-class EditConferencePage extends StatelessWidget {
+class EditConferencePage extends StatefulWidget {
   EditConferencePage({
     Key? key,
+    this.conference,
     required this.onCompleted,
   }) : super(key: key);
 
+  final Conference? conference;
   final Function() onCompleted;
 
+  @override
+  State<EditConferencePage> createState() => _EditConferencePageState();
+}
+
+class _EditConferencePageState extends State<EditConferencePage> {
   final _shortNameController = TextEditingController();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    final c = widget.conference;
+    if (c != null) {
+      _shortNameController.text = c.shortName ?? '';
+      _nameController.text = c.fullName ?? '';
+      _descriptionController.text = c.description ?? '';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,23 +98,25 @@ class EditConferencePage extends StatelessWidget {
               child: BottomButton(
                 title: 'Сохранить',
                 padding: EdgeInsets.zero,
-                onTap: () {
-                  final conference = Conference(
-                    shortName: _shortNameController.text,
-                    fullName: _nameController.text,
-                    description: _descriptionController.text,
-                  );
-                  Get.get<Store<AppState>>().dispatch(
-                    CreateConferenceAction(
-                      conference,
-                      onSuccesed: onCompleted,
-                    ),
-                  );
-                },
+                onTap: _save,
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _save() {
+    final conference = Conference(
+      shortName: _shortNameController.text,
+      fullName: _nameController.text,
+      description: _descriptionController.text,
+    );
+    Get.get<Store<AppState>>().dispatch(
+      CreateConferenceAction(
+        conference,
+        onSuccesed: widget.onCompleted,
       ),
     );
   }
