@@ -37,11 +37,7 @@ class ConferencesTable extends StatelessWidget {
                     horizontal: defaultPadding * 1,
                   ),
                 ),
-                onPressed: () {
-                  AutoRouter.of(context).push(
-                    ConferenceEditScreenRoute(),
-                  );
-                },
+                onPressed: () => _openEditScreen(context),
                 icon: Icon(Icons.add),
                 label: Text("Добавить"),
               ),
@@ -65,7 +61,7 @@ class ConferencesTable extends StatelessWidget {
               ],
               rows: List.generate(
                 conferences.length,
-                (index) => _buildDataRow(conferences[index]),
+                (index) => _buildDataRow(context, conferences[index]),
               ),
             ),
           ),
@@ -74,13 +70,30 @@ class ConferencesTable extends StatelessWidget {
     );
   }
 
-  DataRow _buildDataRow(Conference conference) {
+  DataRow _buildDataRow(BuildContext context, Conference conference) {
     return DataRow(
       cells: [
-        DataCell(Text('${conference.id}')),
-        DataCell(Text(conference.shortName ?? '')),
-        DataCell(Text(conference.description ?? '')),
+        DataCell(
+          Text('${conference.id}'),
+          onTap: () => _openEditScreen(context, conference),
+        ),
+        DataCell(
+          Text(conference.shortName ?? ''),
+          onTap: () => _openEditScreen(context, conference),
+        ),
+        DataCell(
+          Text(conference.description ?? ''),
+          onTap: () => _openEditScreen(context, conference),
+        ),
       ],
+    );
+  }
+
+  void _openEditScreen(BuildContext context, [Conference? conference]) {
+    AutoRouter.of(context).push(
+      ConferenceEditScreenRoute(
+        conference: conference,
+      ),
     );
   }
 }

@@ -26,6 +26,7 @@ class ConferenceEditScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: EditConferencePage(
+          conference: conference,
           onCompleted: () {
             Navigator.pop(context);
           },
@@ -35,17 +36,35 @@ class ConferenceEditScreen extends StatelessWidget {
   }
 }
 
-class EditConferencePage extends StatelessWidget {
+class EditConferencePage extends StatefulWidget {
   EditConferencePage({
     Key? key,
+    this.conference,
     required this.onCompleted,
   }) : super(key: key);
 
+  final Conference? conference;
   final Function() onCompleted;
 
+  @override
+  State<EditConferencePage> createState() => _EditConferencePageState();
+}
+
+class _EditConferencePageState extends State<EditConferencePage> {
   final _shortNameController = TextEditingController();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    final c = widget.conference;
+    if (c != null) {
+      _shortNameController.text = c.shortName ?? '';
+      _nameController.text = c.fullName ?? '';
+      _descriptionController.text = c.description ?? '';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,26 +95,65 @@ class EditConferencePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             ResponsiveCenteredView(
-              child: BottomButton(
-                title: 'Сохранить',
-                padding: EdgeInsets.zero,
-                onTap: () {
-                  final conference = Conference(
-                    shortName: _shortNameController.text,
-                    fullName: _nameController.text,
-                    description: _descriptionController.text,
-                  );
-                  Get.get<Store<AppState>>().dispatch(
-                    CreateConferenceAction(
-                      conference,
-                      onSuccesed: onCompleted,
-                    ),
-                  );
-                },
+              child: Column(
+                children: [
+                  BottomButton(
+                    title: 'Сохранить',
+                    padding: EdgeInsets.zero,
+                    onTap: _save,
+                  ),
+                  const SizedBox(height: 10),
+                  BottomButton(
+                    title: 'Удалить',
+                    padding: EdgeInsets.zero,
+                    backgroundColor: Colors.red,
+                    onTap: _delete,
+                  ),
+                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _delete() {
+    Get.get<Store<AppState>>().dispatch(
+      DeleteConferenceAction(
+        widget.conference!.id!,
+        onSuccesed: widget.onCompleted,
+      ),
+    );
+  }
+
+  void _save() {
+    final conferenceForEdit = widget.conference;
+
+    if (conferenceForEdit != null) {
+      final conference = conferenceForEdit.copyWith(
+        shortName: _shortNameController.text,
+        fullName: _nameController.text,
+        description: _descriptionController.text,
+      );
+      Get.get<Store<AppState>>().dispatch(
+        UpdateConferenceAction(
+          conference,
+          onSuccesed: widget.onCompleted,
+        ),
+      );
+      return;
+    }
+
+    final conference = Conference(
+      shortName: _shortNameController.text,
+      fullName: _nameController.text,
+      description: _descriptionController.text,
+    );
+    Get.get<Store<AppState>>().dispatch(
+      CreateConferenceAction(
+        conference,
+        onSuccesed: widget.onCompleted,
       ),
     );
   }

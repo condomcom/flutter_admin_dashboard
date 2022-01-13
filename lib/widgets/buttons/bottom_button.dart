@@ -8,11 +8,13 @@ class BottomButton extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.padding,
+    this.backgroundColor,
   }) : super(key: key);
 
   final String title;
   final Function() onTap;
   final EdgeInsets? padding;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class BottomButton extends StatelessWidget {
             height: 60,
             child: ElevatedButton(
               style: TextButton.styleFrom(
+                backgroundColor: backgroundColor,
                 padding: EdgeInsets.symmetric(
                   horizontal: defaultPadding * 1.5,
                   vertical:

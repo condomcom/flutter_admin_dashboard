@@ -14,4 +14,16 @@ class ConferencesLoadedAction extends ConferencesAction {
   final List<Conference> conferences;
 }
 
+class UpdateConferenceAction extends ConferencesAction {
+  UpdateConferenceAction(this.conference, {required this.onSuccesed});
+  final Conference conference;
+  final Function() onSuccesed;
+}
+
+class DeleteConferenceAction extends ConferencesAction {
+  DeleteConferenceAction(this.conferenceId, {required this.onSuccesed});
+  final String conferenceId;
+  final Function() onSuccesed;
+}
+
 class ConferencesLoadingFailureAction extends ConferencesAction {}

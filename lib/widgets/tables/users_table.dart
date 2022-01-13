@@ -37,11 +37,7 @@ class UsersTable extends StatelessWidget {
                     horizontal: defaultPadding * 1,
                   ),
                 ),
-                onPressed: () {
-                  AutoRouter.of(context).push(
-                    UserEditScreenRoute(),
-                  );
-                },
+                onPressed: () => _openEditScreen(context),
                 icon: Icon(Icons.add),
                 label: Text("Добавить"),
               ),
@@ -65,7 +61,7 @@ class UsersTable extends StatelessWidget {
               ],
               rows: List.generate(
                 users.length,
-                (index) => _buildDataRow(users[index]),
+                (index) => _buildDataRow(context, users[index]),
               ),
             ),
           ),
@@ -74,13 +70,30 @@ class UsersTable extends StatelessWidget {
     );
   }
 
-  DataRow _buildDataRow(User user) {
+  DataRow _buildDataRow(BuildContext context, User user) {
     return DataRow(
       cells: [
-        DataCell(Text('${user.name} ${user.patronymic} ${user.surname}')),
-        DataCell(Text(user.email ?? '')),
-        DataCell(Text(user.phone ?? '')),
+        DataCell(
+          Text('${user.name} ${user.patronymic} ${user.surname}'),
+          onTap: () => _openEditScreen(context, user),
+        ),
+        DataCell(
+          Text(user.email ?? ''),
+          onTap: () => _openEditScreen(context, user),
+        ),
+        DataCell(
+          Text(user.phone ?? ''),
+          onTap: () => _openEditScreen(context, user),
+        ),
       ],
+    );
+  }
+
+  void _openEditScreen(BuildContext context, [User? user]) {
+    AutoRouter.of(context).push(
+      UserEditScreenRoute(
+        user: user,
+      ),
     );
   }
 }

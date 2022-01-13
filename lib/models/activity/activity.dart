@@ -34,4 +34,30 @@ class Activity {
   final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() => _$ActivityToJson(this);
+
+  Activity copyWith({
+    String? id,
+    String? conferenceId,
+    String? shortName,
+    String? fullName,
+    int? participantsLimit,
+    String? description,
+    DateTime? startsAt,
+    DateTime? finishesAt,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return Activity(
+      id: id ?? this.id,
+      conferenceId: conferenceId ?? this.conferenceId,
+      shortName: shortName ?? this.shortName,
+      fullName: fullName ?? this.fullName,
+      participantsLimit: participantsLimit ?? this.participantsLimit,
+      description: description ?? this.description,
+      startsAt: startsAt ?? this.startsAt,
+      finishesAt: finishesAt ?? this.finishesAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

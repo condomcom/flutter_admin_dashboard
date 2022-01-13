@@ -35,6 +35,7 @@ class ClientFactory {
       dio.interceptors.add(
         PrettyDioLogger(
           responseBody: false,
+          requestBody: true,
         ),
       );
     }

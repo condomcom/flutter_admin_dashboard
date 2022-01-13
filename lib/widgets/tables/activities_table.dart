@@ -37,11 +37,7 @@ class ActivitiesTable extends StatelessWidget {
                     horizontal: defaultPadding * 1,
                   ),
                 ),
-                onPressed: () {
-                  AutoRouter.of(context).push(
-                    ActivityEditScreenRoute(),
-                  );
-                },
+                onPressed: () => _openEditScreen(context),
                 icon: Icon(Icons.add),
                 label: Text("Добавить"),
               ),
@@ -65,7 +61,7 @@ class ActivitiesTable extends StatelessWidget {
               ],
               rows: List.generate(
                 activities.length,
-                (index) => _buildDataRow(activities[index]),
+                (index) => _buildDataRow(context, activities[index]),
               ),
             ),
           ),
@@ -74,13 +70,30 @@ class ActivitiesTable extends StatelessWidget {
     );
   }
 
-  DataRow _buildDataRow(Activity activity) {
+  DataRow _buildDataRow(BuildContext context, Activity activity) {
     return DataRow(
       cells: [
-        DataCell(Text('${activity.id}')),
-        DataCell(Text(activity.shortName ?? '')),
-        DataCell(Text(activity.description ?? '')),
+        DataCell(
+          Text('${activity.id}'),
+          onTap: () => _openEditScreen(context, activity),
+        ),
+        DataCell(
+          Text(activity.shortName ?? ''),
+          onTap: () => _openEditScreen(context, activity),
+        ),
+        DataCell(
+          Text(activity.description ?? ''),
+          onTap: () => _openEditScreen(context, activity),
+        ),
       ],
+    );
+  }
+
+  void _openEditScreen(BuildContext context, [Activity? activity]) {
+    AutoRouter.of(context).push(
+      ActivityEditScreenRoute(
+        activity: activity,
+      ),
     );
   }
 }
