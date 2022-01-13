@@ -62,9 +62,9 @@ class _ActivityEditPageState extends State<ActivityEditPage> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  late DateTime _startDate;
-  late DateTime _finalDate;
-  late double _currentSliderValue;
+  var _startDate = DateTime.now();
+  var _finalDate = DateTime.now();
+  var _currentSliderValue = 10.0;
 
   @override
   void initState() {

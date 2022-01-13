@@ -61,19 +61,19 @@ class _HomePageState extends State<HomePage> {
                     ConferencesTableLoader(),
                     SizedBox(height: defaultPadding),
                     ActivitiesTableLoader(),
-                    SizedBox(height: defaultPadding),
-                    StarageDetails(),
+                    // SizedBox(height: defaultPadding),
+                    // StarageDetails(),
                   ],
                 ],
               ),
             ),
-            if (!Responsive.isMobile(context)) SizedBox(width: defaultPadding),
-            // On Mobile means if the screen is less than 850 we dont want to show it
-            if (!Responsive.isMobile(context))
-              Expanded(
-                flex: 2,
-                child: StarageDetails(),
-              ),
+            // if (!Responsive.isMobile(context)) SizedBox(width: defaultPadding),
+            // // On Mobile means if the screen is less than 850 we dont want to show it
+            // if (!Responsive.isMobile(context))
+            //   Expanded(
+            //     flex: 2,
+            //     child: StarageDetails(),
+            //   ),
           ],
         )
       ],

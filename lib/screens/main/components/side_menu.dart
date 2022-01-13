@@ -13,9 +13,7 @@ class SideMenu extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(
-            child: Text('ТУТ ЛОГО БУДЕТ'),
-          ),
+          DrawerHeader(child: SizedBox()),
           DrawerListTile(
             title: "Главная",
             iconData: Icons.home,
