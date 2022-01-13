@@ -26,33 +26,33 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.3
+  cupertino_icons: ^1.0.4
 
-  google_fonts: ^2.1.0
-  flutter_svg: ^0.22.0
-  fl_chart: ^0.36.1
-  provider: ^6.0.0
-  data_table_2: ^2.0.3
-  dio: ^4.0.0
+  google_fonts: ^2.2.0
+  flutter_svg: ^1.0.1
+  fl_chart: ^0.41.0
+  provider: ^6.0.2
+  data_table_2: ^2.2.0
+  dio: ^4.0.4
 
   pretty_dio_logger: ^1.1.1
-  json_annotation: ^4.1.0
+  json_annotation: ^4.4.0
 
   redux: ^5.0.0
   flutter_redux: ^0.8.2
-  rxdart: ^0.27.1
+  rxdart: ^0.27.3
   equatable: ^2.0.3
   get_it: ^7.2.0
 
-  auto_route: ^3.0.1
+  auto_route: ^3.2.1
   intl: ^0.17.0
-  group_button: ^3.3.1
+  group_button: ^4.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  json_serializable: ^5.0.2
-  auto_route_generator: ^3.0.1
+  json_serializable: ^6.1.4
+  auto_route_generator: ^3.2.1
   build_runner:
 
 # For information on the generic Dart part of this file, see the
